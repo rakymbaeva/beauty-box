@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import Layout from './Layout/Layout';
 
-function App() {
+export default () =>{
+  
   return (
     <div className="App">
-      beauty-box by Aiana Rakymbaeva
+      <Layout>
+        Beauty-Box
+      </Layout>
+     
     </div>
   );
 }
 
-export default App;
