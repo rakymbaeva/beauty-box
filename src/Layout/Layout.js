@@ -1,11 +1,12 @@
-import React from "react";
-import Toolbar from "./Toolbar/Toolbar";
-import Sidebar from "./Sidebar/Sidebar";
+import React from 'react';
+import Toolbar from './Toolbar/Toolbar';
+import Drawer from './Drawer/Drawer';
+import classes from './Layout.module.css';
 
-export default ({children})=>{
-    <div className="Layout">
-        <Toolbar />
-        <Sidebar />
-        {children}
-    </div>
-};
+export default ({ children }) => (
+  <div className={classes.Layout}>
+    <Toolbar />
+    <Drawer />
+    {children}
+  </div>
+);
