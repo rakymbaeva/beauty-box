@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import './App.css';
-import Layout from './Layout/Layout';
 
-export default () =>{
-  
+import React from 'react';
+import './App.css';
+import Layout from './components/Layout/Layout';
+import BeautyBox from './containers/BeautyBox/BeautyBox';
+
+export default () => {
   return (
     <div className="App">
       <Layout>
-        Beauty-Box
+        <BeautyBox />
       </Layout>
-     
     </div>
   );
-}
-
+};

@@ -1,0 +1,10 @@
+.BeautyControls {
+    border: 3px solid rgb(221, 64, 195);
+    background-color: rgb(238, 176, 223);
+    width: 500px;
+    padding-top: .5rem;
+    padding-left: .5rem;
+  
+    display: flex;
+    flex-flow: column nowrap;
+  }
