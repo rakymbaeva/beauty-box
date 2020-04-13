@@ -3,7 +3,7 @@ import classes from "./BeautyControls.module.css";
 import BeautyControl from "./BeautyControl/BeautyControl";
 
 const CONTROLS = [
-  { label: "Pomade barhat", type: "pomadebarhat" },
+  { label: "Pomade-barhat", type: "pomadebarhat" },
   { label: "Pomade-brown", type: "pomadebrown" },
   { label: "Pomade-darkred", type: "pomadedarkred" },
   { label: "Pomade-red", type: "pomadered" },
