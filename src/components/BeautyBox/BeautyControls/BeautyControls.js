@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./BeautyControls.module.css";
 import BeautyControl from "./BeautyControl/BeautyControl";
+import Button from "../../UI/Button/Button";
 
 const CONTROLS = [
   { label: "Pomade-barhat", type: "pomadebarhat" },
@@ -11,7 +12,7 @@ const CONTROLS = [
   
 ];
 
-export default ({ ingredients, addIngredient, removeIngredient }) => {
+export default ({ canOrder, ingredients, addIngredient, removeIngredient, startOrder}) => {
   const controlsOutput = CONTROLS.map((control) => (
     <BeautyControl
       key={control.type}
@@ -22,5 +23,15 @@ export default ({ ingredients, addIngredient, removeIngredient }) => {
     />
   ));
 
-  return <div className={classes.BeautyControls}>{controlsOutput}</div>;
+  return (
+    <div className={classes.BeautyControls}>
+      {controlsOutput}
+      
+      
+     
+      <Button click={startOrder} enabled={canOrder}>
+        Order
+      </Button>
+    </div>
+  );
 };
