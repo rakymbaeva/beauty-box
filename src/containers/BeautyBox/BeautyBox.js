@@ -6,11 +6,11 @@ import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/BeautyBox/OrderSummary/OrderSummary";
 
 const PRICES = {
-  pomadebarhat: 300.1,
-  pomadebrown: 300.2,
-  pomadedarkred: 300.3,
-  pomadered: 300,
-  pomadeviolet: 300,
+  pomadebarhat: 200.1,
+  pomadebrown: 200.2,
+  pomadedarkred: 200.3,
+  pomadered: 200,
+  pomadeviolet: 200,
 };
 
 export default () => {
@@ -21,7 +21,7 @@ export default () => {
   pomadered: 0,
   pomadeviolet: 0,
   });
-  const [price, setPrice] = useState(100);
+  const [price, setPrice] = useState(50);
   const [canOrder, setCanOrder] = useState(false);
   const [isOrdering, setIsOrdering] = useState(false);
 
