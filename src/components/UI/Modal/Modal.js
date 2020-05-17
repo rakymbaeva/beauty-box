@@ -11,7 +11,8 @@ export default ({ children, show, hideCallback }) => {
     return (
         <>
           <Backdrop show={show} hideCallback={hideCallback} />
-          <div className={modalClasses.join(" ")}>{children}</div>
+          <div className={modalClasses.join(" ")}>{children}
+          </div>
         </>
       );
     };

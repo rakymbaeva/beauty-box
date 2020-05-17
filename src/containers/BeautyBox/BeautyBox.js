@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import BeautyKit from "../../components/BeautyBox/BeautyKit/BeautyKit";
 import classes from "./BeautyBox.module.css";
 import BeautyControls from "../../components/BeautyBox/BeautyControls/BeautyControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/BeautyBox/OrderSummary/OrderSummary";
+import axios from "../../axios";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 const PRICES = {
   pomadebarhat: 200.1,
@@ -13,21 +17,16 @@ const PRICES = {
   pomadeviolet: 200,
 };
 
-export default () => {
-  const [ingredients, setIngredients] = useState({
-    pomadebarhat: 0,
-  pomadebrown: 0,
-  pomadedarkred: 0,
-  pomadered: 0,
-  pomadeviolet: 0,
-  });
+export default withErrorHandler( () => {
+  const [materials, setMaterials] = useState(null);
   const [price, setPrice] = useState(50);
   const [canOrder, setCanOrder] = useState(false);
   const [isOrdering, setIsOrdering] = useState(false);
+  const history = useHistory();
 
-  function checkCanOrder(ingredients) {
-    const total = Object.keys(ingredients).reduce((total, ingredient) => {
-      return total + ingredients[ingredient];
+  function checkCanOrder(materials) {
+    const total = Object.keys(materials).reduce((total, material) => {
+      return total + materials[material];
     }, 0);
     setCanOrder(total > 0);
   }
@@ -41,47 +40,86 @@ export default () => {
   }
 
   function finishOrder() {
-    alert("You are on the checkout page!");
+    const queryParams = Object.keys(materials).map(
+      (material) =>
+        encodeURIComponent(material) +
+        "=" +
+        encodeURIComponent(materials[material])
+    );
+    queryParams.push("price=" + encodeURIComponent(price.toFixed(2)));
+
+    history.push({
+      pathname: "/checkout",
+      search: queryParams.join("&"),
+    });
   }
 
 
-
-  function addIngredient(type) {
-    const newIngredients = { ...ingredients };
-    newIngredients[type]++;
-    setIngredients(newIngredients);
-    checkCanOrder(newIngredients);
+  function addMaterial(type) {
+    const newMaterials = { ...materials };
+    newMaterials[type]++;
+    setMaterials(newMaterials);
+    checkCanOrder(newMaterials);
 
     const newPrice = price + PRICES[type];
     setPrice(newPrice);
   }
 
-  function removeIngredient(type) {
-    if (ingredients[type] >= 1) {
-      const newIngredients = { ...ingredients };
-      newIngredients[type]--;
-      setIngredients(newIngredients);
-      checkCanOrder(newIngredients);
+  function removeMaterial(type) {
+    if (materials[type] >= 1) {
+      const newMaterials = { ...materials };
+      newMaterials[type]--;
+      setMaterials(newMaterials);
+      checkCanOrder(newMaterials);
 
       const newPrice = price - PRICES[type];
       setPrice(newPrice);
     }
   }
 
+  useEffect(() => {
+    axios
+      .get("/materials.json")
+      .then((response) => setMaterials(response.data))
+      .catch((error) => {});
+  }, []);
+
+  let output = <Spinner />;
+  if (materials) {
+    output = (
+      <>
+        <BeautyKit price={price} materials={materials} />
+        <BeautyControls
+          startOrder={startOrder}
+          canOrder={canOrder}
+          materials={materials}
+          addMaterial={addMaterial}
+          removeMaterial={removeMaterial}
+        />
+      </>
+    );
+  }
+ 
+
+  let orderSummary = <Spinner />;
+  if (isOrdering ) {
+    orderSummary = (
+      <OrderSummary
+        materials={materials}
+        finishOrder={finishOrder}
+        cancelOrder={cancelOrder}
+        price={price}
+      />
+    );
+  }
+
   return (
     <div className={classes.BeautyBox}>
-      <BeautyKit price={price} ingredients={ingredients} />
-      <BeautyControls
-       startOrder={startOrder}
-       canOrder={canOrder}
-        ingredients={ingredients}
-        addIngredient={addIngredient}
-        removeIngredient={removeIngredient}
-      />
+     {output}
+      
       <Modal  show={isOrdering}  hideCallback={cancelOrder}>
-        <OrderSummary ingredients={ingredients}  finishOrder={finishOrder}
-          cancelOrder={cancelOrder}  price={price}/>
+      {orderSummary}
       </Modal>
     </div>
   );
-};
+}, axios);

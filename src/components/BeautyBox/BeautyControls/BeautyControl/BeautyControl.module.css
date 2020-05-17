@@ -3,17 +3,17 @@
     align-items: center;
   }
   .BeautyControl .label {
-    color: white;
+    color: #bf0420;
     font-family: ' Brush Script';
     font-size: 1.5rem;
-    padding: .5rem;
+    padding: .4rem 1rem;
   }
   .BeautyControl button {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+  height: 30px;
     border: none;
     background-color: white;
-    color: #EC6F31;
+    color: #bf0420;
     font-weight: bold;
     border-radius: 100%;
     cursor: pointer;
@@ -23,6 +23,11 @@
   }
   .BeautyControl button:not(:disabled):hover {
     opacity: .8;
+  }
+  @media (min-width: 600px) {
+    .BeautyControl .label {
+      font-size: 2rem;
+    }
   }
   
   

@@ -2,6 +2,14 @@
   display: flex;
   justify-content: space-between;
 
-  background: rgb(36,13,0);
-  background: linear-gradient(90deg, rgba(36,13,0,1) 0%, rgba(9,121,71,1) 35%, rgba(0,255,119,1) 100%);
+  
+  background: #f17e72;
 }
+.Toolbar nav {
+  display: none;
+}
+@media (min-width: 600px) {
+  .Toolbar nav {
+    display: block;
+  }
+} 

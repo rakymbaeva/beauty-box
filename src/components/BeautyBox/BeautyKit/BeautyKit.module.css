@@ -1,8 +1,7 @@
 .BeautyKit .bento {
-  padding: 1rem;
-  padding-top: 2rem;
   
-  background-color: lightgray;
+  
+  background-color: #f17e72;
   width: 392px;
   height: 300px;
 
@@ -15,4 +14,19 @@
 .BeautyKit .price {
   font-size: 2rem;
   font-weight: bold;
+  color: #bf0420;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.Tree .imagebox {
+  flex-flow: row wrap;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  background-image: url(../../../assets/box.jpg);
+  background-size: cover;
+  width: 100%;
+  max-width: 380px;
+  height: 485px;
+  margin: 0 auto;
 }

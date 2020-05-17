@@ -1,12 +1,12 @@
 import React from "react";
 import classes from "./BeautyControl.module.css";
 
-export default ({ control, removeIngredient, addIngredient, disabled }) => (
+export default ({ control, removeMaterial, addMaterial, disabled }) => (
   <div className={classes.BeautyControl}>
      <span className={classes.label}>{control.label}</span>
     <button
       className={classes.less}
-      onClick={() => removeIngredient(control.type)}
+      onClick={() =>removeMaterial(control.type)}
       disabled={disabled}
     >
       -
@@ -14,7 +14,7 @@ export default ({ control, removeIngredient, addIngredient, disabled }) => (
    
     <button
       className={classes.more}
-      onClick={() => addIngredient(control.type)}
+      onClick={() => addMaterial(control.type)}
     >
       +
     </button>
