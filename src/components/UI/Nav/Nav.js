@@ -5,7 +5,7 @@ import NavItem from './NavItem/NavItem';
 export default () => {
   return(
     <ul className={classes.Nav}>
-    <NavItem  url="/Builder" active>Beauty-Box</NavItem>
+    <NavItem  url="/" active>Beauty-Box</NavItem>
     <NavItem  url="/checkout">Checkout</NavItem>
   </ul>
   )

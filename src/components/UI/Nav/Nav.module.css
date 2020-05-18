@@ -4,6 +4,7 @@
     flex-direction: column;
     margin: 10px 0;
     padding: 0;
+    color:#bf0420 ;
   }
   @media (min-width: 600px) {
     .Nav {
