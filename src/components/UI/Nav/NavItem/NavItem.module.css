@@ -13,11 +13,11 @@
     transition: all .2s ease-in-out;
   }
   .NavItem a:hover {
-    border-color: white;
+    border-color: #bf0420;
     background-color: rgba(255, 255, 255, .3);
   }
   .NavItem .active {
-    border-color: white;
+    border-color: #bf0420;
     background-color: rgba(255, 255, 255, .1);
   }
   @media (min-width: 500px) {
@@ -25,5 +25,6 @@
       height: 70px;
       border: none;
       border-top: 5px solid transparent;
+      
     }
   }
