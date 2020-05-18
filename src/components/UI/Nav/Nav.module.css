@@ -5,10 +5,15 @@
     margin: 10px 0;
     padding: 0;
     color:#bf0420 ;
+    background-color: #f17e72;
+    
+  
   }
   @media (min-width: 600px) {
     .Nav {
       margin: 0 12px;
       flex-direction: row;
+
+    
     }
-  }
+}
