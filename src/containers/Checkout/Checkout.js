@@ -1,27 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useLocation, Route } from "react-router-dom";
+import React, { useState,  } from "react";
+import { useHistory,  Route } from "react-router-dom";
+import axios from "../../axios";
 import CheckoutSummary from "../../components/Checkout/CheckoutSummary/CheckoutSummary";
 import classes from "./Checkout.module.css";
 import CheckoutForm from "./CheckoutForm/CheckoutForm";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import { useSelector } from "react-redux";
 
-export default () => {
+export default withErrorHandler(() => {
     const history = useHistory();
-    const location = useLocation();
-    const [materials, setMaterials] = useState({});
-    const [price, setPrice] = useState(0);
+   
+    const { materials, price } = useSelector((state) => state);
 
-    useEffect(() => {
-        const query = new URLSearchParams(location.search);
-        const newMaterials = {};
-        query.forEach((value, key) => {
-          if (key === "price") {
-            setPrice(+value);
-          } else {
-            newMaterials[key] = +value;
-          }
-        });
-        setMaterials(newMaterials);
-      }, []);
+    const [loading, setLoading] = useState(false);
+
+
 
   function checkoutCancel() {
     history.push("/builder");
@@ -30,6 +24,24 @@ export default () => {
   function checkoutContinue() {
     history.push("/checkout/form");
   }
+  function checkoutFinish(data) {
+    setLoading(true);
+    axios
+      .post("/orders.json", {
+        materials,
+        price,
+        details: data,
+      })
+      .then((response) => {
+        setLoading(false);
+        history.replace("/");
+      });
+  }
+  let formOutput = <Spinner />;
+  if (!loading) {
+    formOutput = <CheckoutForm checkoutFinish={checkoutFinish} />;
+  }
+  
 
   return (
     <div className={classes.Checkout}>
@@ -40,8 +52,8 @@ export default () => {
         checkoutContinue={checkoutContinue}
       />
          <Route path="/checkout/form">
-        <CheckoutForm />
+         {formOutput}
       </Route>
     </div>
   );
-};
+}, axios);

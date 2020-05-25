@@ -1,0 +1,2 @@
+export const ADD_MATERIAL = 'ADD_MATERIAL';
+export const REMOVE_MATERIAL = 'REMOVE_MATERIAL';

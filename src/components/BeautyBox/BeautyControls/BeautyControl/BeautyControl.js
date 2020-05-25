@@ -1,22 +1,32 @@
 import React from "react";
 import classes from "./BeautyControl.module.css";
+import { useDispatch } from "react-redux";
+import { ADD_MATERIAL, REMOVE_MATERIAL } from "../../../../store/actions";
 
-export default ({ control, removeMaterial, addMaterial, disabled }) => (
-  <div className={classes.BeautyControl}>
-     <span className={classes.label}>{control.label}</span>
-    <button
-      className={classes.less}
-      onClick={() =>removeMaterial(control.type)}
-      disabled={disabled}
-    >
-      -
-    </button>
-   
-    <button
-      className={classes.more}
-      onClick={() => addMaterial(control.type)}
-    >
-      +
-    </button>
-  </div>
-);
+export default ({ control, disabled }) =>{
+
+  const dispatch = useDispatch();
+
+  return (
+    <div className={classes.BeautyControl}>
+      <button
+        className={classes.less}
+        onClick={() =>
+          dispatch({ type: REMOVE_MATERIAL, material: control.type })
+        }
+        disabled={disabled}
+      >
+        -
+      </button>
+      <span className={classes.label}>{control.label}</span>
+      <button
+        className={classes.more}
+        onClick={() =>
+          dispatch({ type: ADD_MATERIAL, material: control.type })
+        }
+      >
+        +
+      </button>
+    </div>
+  )
+};

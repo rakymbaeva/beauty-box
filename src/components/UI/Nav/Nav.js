@@ -6,7 +6,7 @@ export default () => {
   return(
     <ul className={classes.Nav}>
     <NavItem  url="/" active>Beauty-Box</NavItem>
-    <NavItem  url="/checkout">Checkout</NavItem>
+    <NavItem  url="/orders">Orders</NavItem>
   </ul>
   )
 };

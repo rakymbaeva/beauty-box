@@ -13,13 +13,11 @@ const CONTROLS = [
   
 ];
 
-export default ({ canOrder, materials, addMaterial, removeMaterial, startOrder}) => {
+export default ({ canOrder, materials, startOrder}) => {
   const controlsOutput = CONTROLS.map((control) => (
     <BeautyControl
       key={control.type}
       control={control}
-      addIngredient={addMaterial}
-      removeIngredient={removeMaterial}
       disabled={materials[control.type] === 0}
     />
   ));
