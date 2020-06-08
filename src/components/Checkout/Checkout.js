@@ -1,19 +1,19 @@
-import React, { useState,  } from "react";
-import { useHistory,  Route } from "react-router-dom";
+import React from "react";
+import { useHistory,  Route, Redirect } from "react-router-dom";
 import axios from "../../axios";
-import CheckoutSummary from "../../components/Checkout/CheckoutSummary/CheckoutSummary";
+import CheckoutSummary from "./CheckoutSummary/CheckoutSummary";
 import classes from "./Checkout.module.css";
 import CheckoutForm from "./CheckoutForm/CheckoutForm";
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import Spinner from "../../components/UI/Spinner/Spinner";
+import withAxios from "../../hoc/withAxios/withAxios";
+import Spinner from "../UI/Spinner/Spinner";
 import { useSelector } from "react-redux";
 
-export default withErrorHandler(() => {
+export default withAxios(({ loading }) => {
     const history = useHistory();
    
-    const { materials, price } = useSelector((state) => state);
+    const { materials, price } = useSelector(state => state.builder);
 
-    const [loading, setLoading] = useState(false);
+    
 
 
 
@@ -25,17 +25,14 @@ export default withErrorHandler(() => {
     history.push("/checkout/form");
   }
   function checkoutFinish(data) {
-    setLoading(true);
+   
     axios
       .post("/orders.json", {
         materials,
         price,
         details: data,
       })
-      .then((response) => {
-        setLoading(false);
-        history.replace("/");
-      });
+      .then(() => history.replace("/"));
   }
   let formOutput = <Spinner />;
   if (!loading) {
@@ -43,14 +40,21 @@ export default withErrorHandler(() => {
   }
   
 
-  return (
-    <div className={classes.Checkout}>
+  let summaryOutput = <Redirect to="/" />
+  if (materials) {
+    summaryOutput = (
      <CheckoutSummary
         materials={materials}
         price={price}
         checkoutCancel={checkoutCancel}
         checkoutContinue={checkoutContinue}
       />
+      )
+    }
+  
+    return (
+      <div className={classes.Checkout}>
+        {summaryOutput}
          <Route path="/checkout/form">
          {formOutput}
       </Route>

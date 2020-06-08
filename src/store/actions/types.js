@@ -1,2 +1,4 @@
 export const ADD_MATERIAL = 'ADD_MATERIAL';
 export const REMOVE_MATERIAL = 'REMOVE_MATERIAL';
+export const SET_MATERIALS = "SET_MATERIALS";
+export const SET_ORDERS = "SET_ORDERS";

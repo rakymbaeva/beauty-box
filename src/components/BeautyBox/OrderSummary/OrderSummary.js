@@ -2,20 +2,13 @@ import React from "react";
 import classes from "./OrderSummary.module.css";
 import Button from "../../UI/Button/Button";
 
-const LABELS = {
-  pomadebarhat: "pomadebarhat",
-  pomadebrown: "pomadebrown",
-  pomadedarkred: "pomadedarkred",
-  pomadered: "pomadered",
-  pomadeviolet: "pomadeviolet",
-};
 
 export default ({ materials, cancelOrder, finishOrder, price }) => {
   const materialsOutput = Object.keys(materials)
-    .filter((material) => materials[material] > 0)
+  .filter((material) => materials[material].quantity > 0)
     .map((material) => (
       <li  key={material}>
-        {LABELS[material]}: {materials[material]}
+          {materials[material].label}: {materials[material].quantity}
       </li>
     ));
 

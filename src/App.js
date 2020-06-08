@@ -4,8 +4,8 @@ import './App.css';
 import { Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./containers/Layout/Layout";
 import BeautyBox from './containers/BeautyBox/BeautyBox';
-import Checkout from "./containers/Checkout/Checkout";
-import Orders from "./containers/Orders/Orders";
+import Checkout from "./components/Checkout/Checkout";
+import Orders from "./components/Orders/Orders";
 
 export default () => {
   return (

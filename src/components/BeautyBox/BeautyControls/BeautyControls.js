@@ -4,21 +4,15 @@ import BeautyControl from "./BeautyControl/BeautyControl";
 import Button from "../../UI/Button/Button";
 
 
-const CONTROLS = [
-  { label: "Pomade-barhat", type: "pomadebarhat" },
-  { label: "Pomade-brown", type: "pomadebrown" },
-  { label: "Pomade-darkred", type: "pomadedarkred" },
-  { label: "Pomade-red", type: "pomadered" },
-  { label: "Pomade-violet", type: "pomadeviolet" },
-  
-];
+
 
 export default ({ canOrder, materials, startOrder}) => {
-  const controlsOutput = CONTROLS.map((control) => (
+  const controlsOutput = Object.keys(materials).map((material) => (
     <BeautyControl
-      key={control.type}
-      control={control}
-      disabled={materials[control.type] === 0}
+    key={material}
+    material={material}
+    label={materials[material].label}
+    disabled={materials[material].quantity === 0}
     />
   ));
 

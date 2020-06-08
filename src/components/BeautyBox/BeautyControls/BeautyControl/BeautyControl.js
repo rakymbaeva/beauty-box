@@ -1,9 +1,9 @@
 import React from "react";
 import classes from "./BeautyControl.module.css";
 import { useDispatch } from "react-redux";
-import { ADD_MATERIAL, REMOVE_MATERIAL } from "../../../../store/actions";
+import { remove, add } from "../../../../store/actions/builder"
 
-export default ({ control, disabled }) =>{
+export default ({ label, material, disabled }) =>{
 
   const dispatch = useDispatch();
 
@@ -11,19 +11,15 @@ export default ({ control, disabled }) =>{
     <div className={classes.BeautyControl}>
       <button
         className={classes.less}
-        onClick={() =>
-          dispatch({ type: REMOVE_MATERIAL, material: control.type })
-        }
+        onClick={() => remove(dispatch, material)}
         disabled={disabled}
       >
         -
       </button>
-      <span className={classes.label}>{control.label}</span>
+      <span className={classes.label}>{label}</span>
       <button
         className={classes.more}
-        onClick={() =>
-          dispatch({ type: ADD_MATERIAL, material: control.type })
-        }
+        onClick={() => add(dispatch, material)}
       >
         +
       </button>

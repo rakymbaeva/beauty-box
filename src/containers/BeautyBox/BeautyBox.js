@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import BeautyKit from "../../components/BeautyBox/BeautyKit/BeautyKit";
 import classes from "./BeautyBox.module.css";
@@ -7,33 +7,34 @@ import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/BeautyBox/OrderSummary/OrderSummary";
 import axios from "../../axios";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import { useSelector } from "react-redux";
+import withAxios from "../../hoc/withAxios/withAxios";
+import { useSelector, useDispatch } from "react-redux";
+import { load } from "../../store/actions/builder";
 
 
-export default withErrorHandler( () => {
-  const { materials, price } = useSelector((state) => state);
+export default withAxios( () => {
+  const { materials, price } = useSelector(state => state.builder);
   const [isOrdering, setIsOrdering] = useState(false);
   const history = useHistory();
-
-  const canOrder = Object.values(materials).reduce((canOrder, number) => {
-    return !canOrder ? number > 0 : canOrder;
-  }, false);
-
-  
+  const dispatch = useDispatch();
 
 
   
-/*
+
+
+  
+
   useEffect(() => {
-    axios
-      .get("/materials.json")
-      .then((response) => setMaterials(response.data))
-      .catch((error) => {});
-  }, []);
-*/
+    load(dispatch);
+  }, [dispatch]);
+
+
   let output = <Spinner />;
   if (materials) {
+    const canOrder = Object.values(materials).reduce((canOrder, material) => {
+      return !canOrder ? material.quantity > 0 : canOrder;
+    }, false);
+
     output = (
       <>
         <BeautyKit price={price} materials={materials} />
@@ -42,31 +43,27 @@ export default withErrorHandler( () => {
           canOrder={canOrder}
           materials={materials}
         />
+          <Modal show={isOrdering} hideCallback={() => setIsOrdering(false)}>
+          <OrderSummary
+            materials={materials}
+            finishOrder={() => history.push("/checkout")}
+            cancelOrder={() => setIsOrdering(false)}
+            price={price}
+            />
+        </Modal>
       </>
     );
   }
  
 
-  let orderSummary = <Spinner />;
-  if (isOrdering ) {
-    orderSummary = (
-      <OrderSummary
-        materials={materials}
-        finishOrder={() => history.push("/checkout")}
-        cancelOrder={() => setIsOrdering(false)}
-        price={price}
-      />
-    );
-  }
+ 
 
   return (
     <div className={classes.BeautyBox}>
        
      {output}
       
-     <Modal show={isOrdering} hideCallback={() => setIsOrdering(false)}>
-      {orderSummary}
-      </Modal>
+    
     </div>
   );
 }, axios);

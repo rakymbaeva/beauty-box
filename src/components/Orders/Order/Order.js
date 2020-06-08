@@ -1,19 +1,14 @@
 import React from "react";
 import classes from "./Order.module.css";
 
-const CONTROLS = {
- 
-  pomadebarhat: "PomadeBarhat",
-  pomadebrown: "pomadebrown",
-  pomadedarkred: "pomadedarkred",
-  pomadered: "pomadered",
-  pomadeviolet: "pomadeviolet",
-};
+
 
 export default ({ price, materials, details }) => {
-  const materialsOutput = Object.keys(materials).map((key) => (
-    <span key={key} className={classes.material}>
-      {CONTROLS[key]} ({materials[key]})
+  const materialsOutput = Object.keys(materials)
+  .filter(material => materials[material].quantity > 0)
+  .map(material => (
+    <span key={material} className={classes.material}>
+      {materials[material].label} ({materials[material].quantity})
     </span>
   ));
   

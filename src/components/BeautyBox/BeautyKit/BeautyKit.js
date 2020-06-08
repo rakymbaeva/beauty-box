@@ -5,9 +5,9 @@ import classes from "./BeautyKit.module.css";
 export default ({ price, materials }) => {
   let materialsOutput = [];
 
-  Object.keys(materials).forEach((type) => {
-    for (let i = 0; i < materials[type]; i++) {
-      materialsOutput.push(<Beauty key={type + i} type={type} />);
+  Object.keys(materials).forEach((material) => {
+    for (let i = 0; i < materials[material].quantity; i++) {
+      materialsOutput.push(<Beauty key={material + i} type={material} />);
     }
   });
 
